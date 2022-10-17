@@ -1,5 +1,6 @@
 package main.controlador;
 
+import main.Repositorio.ProveedorRepository;
 import main.modelos.Proveedor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ public class ProveedorControlador {
 
     @Autowired
     private ProveedorServicio servicio;
+    private ProveedorRepository repositorio;
 
 
     //LISTAR PROVEEDORES
@@ -26,6 +28,7 @@ public class ProveedorControlador {
 
 
     //BUSCAR PROVEEDOR POR ID
+    @CrossOrigin(allowedHeaders = {"Authorization", "Origin"})
     @GetMapping("/proveedores/{id}")
     public ResponseEntity<Proveedor> obtenerProveedor(@PathVariable Integer id)
     {
@@ -39,6 +42,7 @@ public class ProveedorControlador {
     }
 
     //ALTA PROVEEDOR
+    @CrossOrigin(allowedHeaders = {"Authorization", "Origin"})
     @PostMapping("/proveedores")
     public void registrarProveedor(@RequestBody Proveedor proveedor)
     {
@@ -46,6 +50,7 @@ public class ProveedorControlador {
     }
 
     //ACTUALIZAR PROVEEDOR
+    @CrossOrigin(allowedHeaders = {"Authorization", "Origin"})
     @PutMapping("proveedor/{id}")
     public ResponseEntity<?> actualizarProveedor(@RequestBody Proveedor proveedor, @PathVariable Integer id)
     {
@@ -54,7 +59,10 @@ public class ProveedorControlador {
 
             proveedorExistente.setNombre(proveedor.getNombre());
             proveedorExistente.setTelefono(proveedor.getTelefono());
+            proveedorExistente.setPais(proveedor.getPais());
             proveedorExistente.setDireccion(proveedor.getDireccion());
+            proveedorExistente.setCodigo_postal(proveedor.getCodigo_postal());
+            proveedorExistente.setEmail(proveedor.getEmail());
             proveedorExistente.setLatitud(proveedor.getLatitud());
             proveedorExistente.setLongitud(proveedor.getLongitud());
 
@@ -67,6 +75,7 @@ public class ProveedorControlador {
     }
 
     //ELIMINAR PROVEEDOR
+    @CrossOrigin(allowedHeaders = {"Authorization", "Origin"})
     @DeleteMapping("/proveedores/{id}")
     public void eliminarProveedor(@PathVariable Integer id)
     {
